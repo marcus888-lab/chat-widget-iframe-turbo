@@ -1,4 +1,4 @@
-# Pydantic AI Django Project
+# Pydantic AI Django Project - In Progress
 
 A modern web application built with Django, Pydantic, and ASGI, utilizing FastAPI-style typing with Django's powerful ORM.
 
