@@ -70,7 +70,7 @@ docker-compose up -d
 
 # Start backend
 cd ../apps/backend
-uvicorn config.asgi:application --reload -h 0.0.0.0 --port 8000
+uvicorn config.asgi:application --reload --host 0.0.0.0 --port 8000
 
 # Start frontend (in a new terminal)
 cd ../frontend
@@ -191,6 +191,97 @@ The API documentation is automatically generated and can be accessed at:
 WebSocket connections are available at:
 
 - Chat: ws://localhost:8000/ws/chat/
+
+## Message Format Documentation
+
+### WebSocket Messages
+
+Messages sent and received through the WebSocket connection follow this format:
+
+```typescript
+interface WebSocketMessage {
+  type: string; // Message type identifier
+  role: string; // 'user' or 'assistant'
+  message: string; // The actual message content
+  timestamp: Date | string; // Message timestamp
+  metadata?: {
+    context_used?: boolean; // Whether context was used in generating the response
+    confidence?: number; // Confidence score of the response (0.0 to 1.0)
+    error?: "timeout" | "cancelled" | "system_error"; // Error type if applicable
+    tool_results?: ToolResult[]; // Results from tool operations
+    selected_product?: ProductResult; // Selected product information
+  };
+}
+```
+
+### Chat Messages
+
+Internal message representation in the chat widget:
+
+```typescript
+interface Message {
+  id: string; // Unique message identifier
+  type: "message" | "loading"; // Message type
+  content: string; // Message content
+  sender: string; // Message sender
+  timestamp: Date; // Message timestamp
+  status: "sent" | "sending" | "error"; // Message status
+  metadata?: {
+    context_used?: boolean;
+    confidence?: number;
+    error?: "timeout" | "cancelled" | "system_error";
+    tool_results?: ToolResult[];
+    selected_product?: ProductResult;
+  };
+}
+```
+
+### Tool Results
+
+Format for tool operation results:
+
+```typescript
+interface ToolResult {
+  tool: string; // Name of the tool used
+  result: string; // Result of the tool operation
+}
+```
+
+### Product Results
+
+Format for individual product results:
+
+```typescript
+interface ProductResult {
+  category: string; // Product category
+  name: string; // Product name
+  description: string; // Product description
+  price: number; // Product price
+  signed_url?: string; // Optional URL for product image
+  scores: {
+    hybrid: number; // Hybrid search score
+  };
+}
+```
+
+### Product Search Results
+
+Format for product search results:
+
+```typescript
+interface ProductSearchResult {
+  data: ProductResult[]; // Array of product results
+  metadata: {
+    search_type: string; // Type of search performed
+    total_results: number; // Total number of results
+    weights?: {
+      text: number; // Text search weight
+      vector: number; // Vector search weight
+    };
+    error?: "timeout" | "cancelled" | "system_error";
+  };
+}
+```
 
 ## Contributing
 

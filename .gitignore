@@ -64,6 +64,7 @@ apps/backend/htmlcov/
 apps/backend/celerybeat-schedule
 apps/backend/celerybeat.pid
 apps/backend/.venv/
+apps/backend/venv/
 apps/backend/*/migrations/*.py
 !apps/backend/*/migrations/__init__.py
 

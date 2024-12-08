@@ -17,18 +17,52 @@ import environ
 
 # Initialize environ
 env = environ.Env()
-# Read .env file from infrastructure directory
-env.read_env(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))), 'infrastructure', '.env'))
+# Read .env file from backend directory
+env.read_env(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Logging Configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {process:d} {thread:d} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+            'level': 'DEBUG',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        'chat': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-p#284_bac#w$mi)7&!l0pmfsaq1bd9nsyt0moz!#co#vomh00$')
+SECRET_KEY = env('SECRET_KEY', default='django-insecure-p#284_bac#w$mi)7&!l0pmfsaq1bd9nsyt0moz!#co#vomh00$')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', True)
@@ -63,6 +97,7 @@ INSTALLED_APPS = [
     # Local apps
     "api",
     "chat",
+    "products",  # Add products app
 ]
 
 MIDDLEWARE = [
@@ -121,7 +156,7 @@ DATABASES = {
         'HOST': env('POSTGRES_HOST', default='localhost'),
         'PORT': env('POSTGRES_PORT', default='5432'),
         'OPTIONS': {
-            'options': '-c extensions.vector=on'  # Enable pgvector extension
+            'options': '-c extensions.vector=on -c search_path=public'  # Combined options
         }
     }
 }
@@ -277,10 +312,21 @@ if DEBUG:
     }
 
 # Vector Database Configuration
-VECTOR_EMBEDDING_DIMENSION = 1536  # Typical dimension for OpenAI embeddings
+VECTOR_EMBEDDING_DIMENSION = 768  # Dimension for nomic embeddings
 
 # Site Framework (required for Allauth)
 SITE_ID = 1
 
 # OpenAI Configuration
 OPENAI_API_KEY = env('OPENAI_API_KEY', default='')
+
+# MinIO Configuration
+MINIO_ROOT_USER = env('MINIO_ROOT_USER', default='minioadmin')
+MINIO_ROOT_PASSWORD = env('MINIO_ROOT_PASSWORD', default='minioadmin')
+MINIO_HOST = env('MINIO_HOST', default='localhost')
+MINIO_PORT = env('MINIO_PORT', default='9000')
+MINIO_USE_SSL = env.bool('MINIO_USE_SSL', False)
+MINIO_BUCKET_NAME = env('MINIO_BUCKET_NAME', default='chat-files')
+
+# Ignore logfire warning
+os.environ['LOGFIRE_IGNORE_NO_CONFIG'] = '1'
