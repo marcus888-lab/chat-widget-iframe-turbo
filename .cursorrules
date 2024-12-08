@@ -1,0 +1,226 @@
+# **Code Generation Guidelines**
+
+## **Rules**
+
+### **1. Project Structure Management**
+
+- **Read and Maintain `tree.md`**:
+  - Check if a file named `tree.md` exists in the project root directory:
+    - If `tree.md` exists, read it and use it to understand the current project structure.
+    - If `tree.md` does not exist:
+      - Run `ls -R` in the project root directory.
+      - Save the output to a new file named `tree.md`, excluding irrelevant files (e.g., `.gitignore` or hidden files).
+  - After completing any task, regenerate the `tree.md` file using `ls -R` to reflect the updated project structure.
+- **Monorepo and Turborepo (if applicable)**:
+  - If using a monorepo setup with Turborepo, maintain separate packages and apps under directories such as `apps/`, `packages/`, and `infrastructure/`.
+  - Keep packages and services isolated for easier versioning and scaling.
+  - Example structure:
+    ```
+    project-root/
+    ├── apps/
+    ├── packages/
+    ├── infrastructure/
+    ├── task-log/
+    ├── README.md
+    ├── tree.md
+    └── ...
+    ```
+
+---
+
+### **2. README Management**
+
+- **Check and Update `README.md`**:
+  - **Before starting any task**, read the `README.md` to ensure consistency with the current project structure and objectives.
+  - **After completing each task**, update the `README.md` to include:
+    - Descriptions of newly added features or configurations.
+    - Any changes to the project’s structure, purpose, or functionality.
+  - If `README.md` does not exist, create it with a clear and professional structure.
+- **Additional READMEs**:
+  - If present, ensure `infrastructure/README.md` is kept up-to-date, documenting infrastructure requirements, environment variables, and deployment instructions.
+
+---
+
+### **3. Task Log Organization**
+
+- **Organize Task Logs**:
+
+  - Check if a folder named `task-log` exists in the project root directory:
+    - If `task-log` does not exist, create it.
+  - Within `task-log/`, maintain the following structure:
+    ```
+    task-log/
+    ├── completed/  # Completed task records with implementation details
+    ├── current/    # Active tasks and immediate priorities
+    ├── next/       # Upcoming tasks and future plans
+    └── notes/      # Development guidelines and best practices
+    ```
+  - Place new, in-progress tasks in the `current/` directory.
+  - Once a task is completed, move its log file to the `completed/` directory.
+  - Tasks not yet started (planned for the future) go into `next/`.
+  - The `notes/` directory can be used for general guidelines, references, or best practices.
+
+- **Task Log Naming Convention**:
+
+  - Use a sequential numbering system followed by a descriptive task name:
+    - `[num]-task-[unique-task-name].md`
+  - Examples:
+    - `01-task-setup-tailwind.md`
+    - `02-task-add-eslint.md`
+    - `03-task-configure-api.md`
+
+- **Task Log Format**:
+  Each task log file should include:
+  1. **Task Name**: A descriptive and unique name.
+  2. **Task Description**: A brief explanation of what the task accomplished.
+  3. **Files or Configurations Changed**: A detailed list of all created, modified, or deleted files.
+  4. **Before and After Project Tree Snapshots**:
+     - Use `ls -R` to show the directory structure before and after the task.
+  5. **Timestamp**: The exact date and time when the task was completed.
+  6. **Status and Completion**:
+     - Initially store the task in `current/` as “In Progress”.
+     - Upon finishing, update the status to “Complete” and move the file to `completed/`.
+     - Include a completion checklist (e.g., tests passed, documentation updated, code reviewed).
+
+---
+
+### **4. File Reading and Compliance**
+
+- Before starting any task, always read and ensure alignment with:
+  - **`README.md`**: Overall project overview, structure, and objectives.
+  - **`Instruction.md`**: Project setup instructions, folder structures, requirements.
+  - **`tailwind-instruction.md`**: Defines the project’s color palette and theming rules for any styling tasks.
+  - **`tree.md`**: Up-to-date snapshot of the project structure.
+- If working in a Django environment (e.g., Pydantic-AI Django Project):
+  - Follow Django app-based structure, use UUID primary keys, and document endpoints in OpenAPI.
+  - For infrastructure tasks, prefix Docker services, maintain volumes, and document environment variables.
+- For frontend tasks (e.g., a chat widget):
+  - Use TypeScript, maintain logical component structure, and follow theming rules.
+
+---
+
+### **5. Task Execution Workflow**
+
+#### **Before Starting**:
+
+1. Check `README.md` for alignment with project objectives. Update it if missing or outdated.
+2. Check `tree.md`; if it doesn’t exist, generate it using `ls -R`.
+3. Check for the `task-log` folder; create it if missing.
+4. Review `Instruction.md` and `tailwind-instruction.md` for context and guidelines.
+5. If using a monorepo approach:
+   - Confirm the correct structure in `apps/`, `packages/`, and `infrastructure/`.
+   - Verify that documentation (like `infrastructure/README.md`) is up-to-date.
+
+#### **During the Task**:
+
+1. Follow instructions from `Instruction.md` and `tailwind-instruction.md`.
+2. Log all files created, modified, or deleted.
+3. Ensure code and configurations adhere to established rules (linting, test coverage, consistent theming).
+
+#### **After Completing**:
+
+1. Regenerate the `tree.md` to reflect the updated structure.
+2. Update `README.md` with details of changes made.
+3. Document the task in a new log file in `task-log/`, following the naming and format conventions.
+4. Mark the task as complete, filling in timestamps and completing checklists.
+
+---
+
+### **6. Task Log File Format**
+
+````markdown
+# Task Name: [Descriptive Task Name]
+
+- **Description**: [Brief explanation of what the task accomplished]
+- **Files or Configurations Changed**:
+
+  - [File name or configuration name]
+  - [File name or configuration name]
+
+- **Project Tree Before**:
+  [Insert ls -R output before the task]
+
+markdown
+Copy code
+
+- **Project Tree After**:
+  [Insert ls -R output after the task]
+
+markdown
+Copy code
+
+- **Timestamp**: [YYYY-MM-DD HH:mm:ss]
+
+---
+
+### **7. Output Requirements**
+
+- **Generated Code**: Provide clean, modular code or configurations per `Instruction.md` and `tailwind-instruction.md`.
+- **Updated `tree.md`**: Always update `tree.md` post-task to reflect the latest structure.
+- **Updated `README.md`**: Include new features, configurations, and structural changes after each task.
+- **Task Log File**: Adhere to the naming convention and format, ensuring clarity and completeness.
+
+---
+
+### **8. Reminders**
+
+- **Do Not Skip Steps**:
+
+  - Always read `README.md`, `Instruction.md`, `tailwind-instruction.md`, and `tree.md` before starting a task.
+  - Always update `tree.md` and `README.md` after each task.
+
+- **Do Not Combine Logs**:
+
+  - Each task must have its own log file with a unique name.
+
+- **Ensure Clean and Error-Free Output**:
+  - Adhere to project style, functionality, and theming requirements.
+
+---
+
+### **Example Workflow**
+
+**Scenario**: Adding TailwindCSS
+
+**Before Starting**:
+
+- Check `README.md` alignment.
+- Check `tree.md` for current structure.
+- Ensure `task-log` exists.
+
+**Execution**:
+
+- Add TailwindCSS per `Instruction.md`.
+- Follow `tailwind-instruction.md` for color palette.
+
+**After Completing**:
+
+- Update `tree.md`.
+- Update `README.md` with TailwindCSS details.
+- Create `01-task-setup-tailwind.md` in `task-log/`.
+
+**Example Task Log**:
+
+```markdown
+# Task Name: Setup TailwindCSS
+
+- **Description**: Installed and configured TailwindCSS. Defined primary and secondary colors as per `tailwind-instruction.md`.
+- **Files or Configurations Changed**:
+
+  - `tailwind.config.js`
+  - `styles/globals.css`
+
+- **Project Tree Before**:
+  /project-root
+  └── README.md
+
+- **Project Tree After**:
+  /project-root
+  ├── README.md
+  ├── tailwind.config.js
+  └── styles/
+  └── globals.css
+
+- **Timestamp**: 2024-12-03 16:00:00
+```
+````

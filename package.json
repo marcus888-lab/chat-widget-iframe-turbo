@@ -1,0 +1,37 @@
+{
+  "name": "pydantic-ai-django",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "pnpm@8.15.4",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,md,json}\"",
+    "prepare": "husky install",
+    "frontend:dev": "turbo run dev --filter=frontend",
+    "frontend:build": "turbo run build --filter=frontend",
+    "frontend:start": "turbo run start --filter=frontend",
+    "backend:dev": "cd apps/backend && python manage.py runserver",
+    "backend:migrate": "cd apps/backend && python manage.py migrate",
+    "backend:makemigrations": "cd apps/backend && python manage.py makemigrations",
+    "packages:build": "turbo run build --filter=./packages/*",
+    "packages:dev": "turbo run dev --filter=./packages/*",
+    "ui:build": "turbo run build --filter=ui",
+    "types:build": "turbo run build --filter=types",
+    "chat-widget:build": "turbo run build --filter=chat-widget"
+  },
+  "devDependencies": {
+    "turbo": "^1.12.4",
+    "@changesets/cli": "^2.27.1",
+    "prettier": "^3.2.5",
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2"
+  }
+}

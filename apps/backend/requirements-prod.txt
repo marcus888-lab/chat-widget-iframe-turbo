@@ -1,0 +1,7 @@
+-r requirements.txt
+
+# Production Specific
+sentry-sdk>=1.40.0
+django-anymail>=10.2
+django-maintenance-mode>=0.21.1
+django-health-check>=3.18.1
