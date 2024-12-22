@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Widget</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #chat-widget-root {
+            height: 100%;
+        }
+    </style>
+    <!-- Add React and ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+</head>
+<body>
+    <script src="/dist/iframe.global.js"></script>
+    <script>
+        if (window.ChatWidget && typeof window.ChatWidget.init === 'function') {
+            window.ChatWidget.init({
+                sessionId: 'demo-session',
+                wsUrl: 'ws://localhost:8000/ws/chat/',
+                title: 'Demo Chat',
+                placeholder: 'Type your message...'
+            });
+        } else {
+            console.error('ChatWidget not properly initialized');
+        }
+    </script>
+</body>
+</html>

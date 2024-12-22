@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Widget Demo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .demo-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .chat-widget-container {
+            width: 400px;
+            height: 600px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #chat-widget-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="demo-container">
+        <h1>Chat Widget Demo</h1>
+        <p>This is a demo of the chat widget embedded in an iframe.</p>
+
+        <div class="chat-widget-container">
+            <iframe
+                id="chat-widget-iframe"
+                src="/widget.html"
+                allow="microphone"
+                title="Chat Widget">
+            </iframe>
+        </div>
+    </div>
+</body>
+</html>
