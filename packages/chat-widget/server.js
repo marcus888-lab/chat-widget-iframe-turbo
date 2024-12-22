@@ -8,8 +8,8 @@ app.use(express.static('public'));
 app.use('/dist', express.static('dist'));
 
 const PORT = process.env.PORT || 3001;
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
-  console.log(`Demo page: http://localhost:${PORT}/demo.html`);
-  console.log(`Widget page: http://localhost:${PORT}/widget.html`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Server running at http://0.0.0.0:${PORT}`);
+  console.log(`Demo page: http://0.0.0.0:${PORT}/demo.html`);
+  console.log(`Widget page: http://0.0.0.0:${PORT}/widget.html`);
 });
